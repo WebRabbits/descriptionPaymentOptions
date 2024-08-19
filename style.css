@@ -1,0 +1,177 @@
+.container-modal {
+  width: auto;
+  height: 650px;
+  border: 1px solid rgb(51, 51, 51);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  position: relative;
+  z-index: 1000000;
+  overflow: overlay;
+  opacity: 0;
+  visibility: hidden;
+  /* display: none; */
+  transition: 0.5s linear;
+  transition: opacity 0.3s linear, visibility 0.3s linear;
+}
+
+.openModal {
+  opacity: 1;
+  visibility: visible;
+  /* display: block;
+   animation: showBlock 0.5s linear forwards;
+   transition: 0.5s; */
+}
+
+/* @keyframes showBlock {
+   0% {
+     opacity: 0;
+   }
+   100% {
+     opacity: 1;
+   }
+ } */
+
+.close-modal {
+  cursor: pointer;
+  font-size: 18px;
+  color: #8e8e8e;
+  transition: 0.5s;
+}
+
+.add_button_description_payment {
+  cursor: pointer;
+}
+
+.neon_border {
+  width: 90%;
+  height: 100%;
+  padding: 20px;
+  margin: auto;
+  border: 2px #000 solid;
+}
+
+.section-block {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  margin: 15px 0px 20px 0px;
+}
+
+.container-close-modal {
+  align-content: center;
+  position: absolute;
+  top: 0;
+  right: 7px;
+}
+
+.container-close-modal :hover {
+  color: #3b3b3b;
+  transition: 0.5s;
+}
+
+.neon_border {
+  width: 90%;
+  height: 100%;
+  padding: 20px;
+  margin: auto;
+  border: 2px #000 solid;
+}
+
+.form-title {
+  text-align: center;
+}
+
+.form-item {
+  position: relative;
+}
+
+.form-item label {
+  position: absolute;
+  left: 27px;
+  top: 4px;
+  opacity: 0.8;
+  transition: top 0.5s;
+  z-index: 1;
+}
+
+.form-item input[type='text'],
+textarea {
+  display: block;
+  width: 98%;
+  padding: 5px;
+  margin: auto;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  border-bottom: none;
+  background: no-repeat bottom, 50% calc(100% - 1px);
+  background-size: 0 100%, 100% 100%;
+  background-image: linear-gradient(0deg, #2d9ecd 2px, rgba(156, 39, 176, 0) 0),
+    linear-gradient(0deg, #ccc 1px, hsla(0, 0%, 82%, 0) 0);
+  border-radius: 3px;
+  position: relative;
+  z-index: 100;
+}
+
+.form-item textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-item input[type='text']:focus,
+textarea:focus {
+  outline: none;
+  background-size: 100% 100%, 100% 100%;
+  transition-duration: 0.3s;
+  opacity: 1;
+  box-shadow: none;
+}
+
+.form-item input[type='text']:focus + label,
+input[type='text']:not(:placeholder-shown) + label,
+textarea:focus + label,
+textarea:not(:placeholder-shown) + label {
+  top: -20px;
+  opacity: 1;
+}
+
+::-webkit-input-placeholder {
+  opacity: 0;
+}
+
+.form-item input[type='text']:focus::-webkit-input-placeholder,
+textarea:focus::-webkit-input-placeholder {
+  opacity: 1;
+}
+
+.container-text {
+  margin: 0px 14px 0px 14px;
+}
+
+.container-text > p {
+  margin: 0;
+  font-size: 19px;
+  border-top: 1px solid #2d9ecd;
+  padding-top: 15px;
+}
+
+.container-text > div > span {
+  font-size: 17px;
+  content: '+';
+}
+
+.container-text > div > input[type='checkbox'] {
+  margin: 0;
+  text-align: center;
+  width: 20px;
+  height: 16px;
+}
+
+.private-options {
+  margin-top: 20px;
+}
+
+.section-block > .list-toggle {
+  margin: 0px 14px 0px 14px;
+}
