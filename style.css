@@ -175,3 +175,14 @@ textarea:focus::-webkit-input-placeholder {
 .section-block > .list-toggle {
   margin: 0px 14px 0px 14px;
 }
+
+section:last-child {
+  text-align: center;
+  margin: 15px 0px 20px 0px;
+}
+
+.form_payments_button {
+  font-size: 22px;
+  border-radius: 3px;
+  cursor: pointer;
+}
