@@ -32,36 +32,42 @@ divModal.insertAdjacentHTML(
         <div class="form-item">
             <input type="text" class="form_type_input" name="namePayment" required placeholder="Введите название платёжной системы...">
             <label>Название платёжной системы</label>
+            <span class="error_message">Заполните данное поле</span>
         </div>
       </section>
       <section class="section-block">
         <div class="form-item">
           <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="optionsPaysystem" required placeholder="Введите все данные о настройках платёжной системы..."></textarea>
           <label>Настройка платёжной системы</label>
+          <span class="error_message">Заполните данное поле</span>
         </div>
     </section>
     <section class="section-block">
       <div class="form-item">
         <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="optionsPayconfig" required placeholder="Введите параметры и значения конфигурационных данных платёжной системы... (Также, можно дать краткое описание каждого параметра)"></textarea>
         <label>Настройка конфига платёжной системы</label>
+        <span class="error_message">Заполните данное поле</span>
       </div>
     </section>
     <section class="section-block">
       <div class="form-item">
         <input type="text" class="form_type_input" name="typePayment" required placeholder="Укажите, что поддерживает платёжная система - ДЕПОЗИТ/ВЫВОД">
         <label>Поддержка видов транзакций</label>
+        <span class="error_message">Заполните данное поле</span>
       </div>
     </section>
     <section class="section-block">
       <div class="form-item">
       <input type="text" class="form_type_input" name="supportCurrencies" required placeholder="Укажите все поддерживаемые валюты...">
       <label>Поддерживаемые валюты</label>
+      <span class="error_message">Заполните данное поле</span>
       </div>
     </section>
     <section class="section-block">
       <div class="form-item">
       <input type="text" class="form_type_input" name="supportConversion" required placeholder="Укажите, поддерживает ли платёжная система конвертацию - ПРИСУТСТВУЕТ/ОТСУТСТВУЕТ">
       <label>Поддержка конвертации с нашей стороны</label>
+      <span class="error_message">Заполните данное поле</span>
       </div>
     </section>
     <section class="section-block">
@@ -83,23 +89,27 @@ divModal.insertAdjacentHTML(
       <div class="container-text">
         <p>Поддерживаемые дополнительные поля:</p>
       </div>
-      <span class="list-toggle">Required-поля:</span>
+      <p class="list-toggle">Required-поля:</p>
       <div class="form-item private-options">
         <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="requiredFieldsDeposit" required placeholder="Перечислите список required-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>Required-поля при депозите средств</label>
+        <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
         <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="requiredFieldsWithdrawal" required  placeholder="Перечислите список required-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>Required-поля при выводе средств</label>
+        <span class="error_message">Заполните данное поле</span>
       </div>
-      <span class="list-toggle">AdditionalParams-поля:</span>
+      <p class="list-toggle">AdditionalParams-поля:</p>
       <div class="form-item private-options">
         <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="additionalFieldsDeposit" required  placeholder="Перечислите список additionalParams-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>additionalParams-поля при депозите средств</label>
+        <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
         <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="additionalFieldsWithdrawal" required placeholder="Перечислите список additionalParams-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>additionalParams-поля при выводе средств</label>
+        <span class="error_message">Заполните данное поле</span>
       </div>
     </section>
     <section class="section-block">
@@ -109,10 +119,12 @@ divModal.insertAdjacentHTML(
       <div class="form-item private-options">
         <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="descDeposit" required  placeholder="Опишите работу платёжной системы при ДЕПОЗИТЕ средств..."></textarea>
         <label>Описание работы при ДЕПОЗИТЕ средств</label>
+        <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
         <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="descWithdrawal" required placeholder="Опишите работу платёжной системы при ВЫВОДЕ средств..."></textarea>
         <label>Описание работы при ДЕПОЗИТЕ средств</label>
+        <span class="error_message">Заполните данное поле</span>
       </div>
     </section>
     <section>
@@ -139,6 +151,8 @@ const textareaList = Array.from(
   formModal.querySelectorAll('.form_type_textarea')
 );
 // console.log(inputList, textareaList);
+const errorMessage = Array.from(document.querySelectorAll('.error_message'));
+// console.log(errorMessage);
 const submitButton = document.querySelector('.form_payments_button');
 
 const three = document.querySelector('.container-modal');
@@ -177,19 +191,25 @@ function startValidationForm() {
 
     elementForm.forEach((itemElement) => {
       // console.log(itemElement);
-      generalValidationForm(itemElement);
+      errorMessage.forEach((itemError) => {
+        generalValidationForm(itemElement, itemError);
+      });
     });
   });
   elementForm.forEach((itemElement) => {
     itemElement.addEventListener('input', () =>
-      checkElementsValid(itemElement)
+      errorMessage.forEach((itemError) => {
+        checkElementsValid(itemElement, itemError);
+      })
     );
   });
 
   // elementForm.forEach((itemElement) => {
-  //   itemElement.addEventListener('change', () =>
-  //     changeElementsValid(itemElement)
-  //   );
+  //   itemElement.addEventListener('change', () => {
+  //     errorMessage.forEach((itemError) => {
+  //       checkElementsValid(itemElement, itemError);
+  //     });
+  //   });
   // });
 }
 
@@ -204,13 +224,15 @@ function startValidationForm() {
 // })
 // }
 
-function checkElementsValid(itemElement) {
-  console.log(itemElement);
+function checkElementsValid(itemElement, itemError) {
+  // console.log(itemElement);
   if (itemElement.type == 'checkbox') return;
-  if (itemElement.value == '') {
-    elementStyleInvalid(itemElement);
-  } else {
-    elementStyleValid(itemElement);
+  if (itemElement.parentElement == itemError.parentElement) {
+    if (itemElement.value == '') {
+      elementStyleInvalid(itemElement, itemError);
+    } else {
+      elementStyleValid(itemElement, itemError);
+    }
   }
 }
 
@@ -223,21 +245,29 @@ function checkElementsValid(itemElement) {
 //   }
 // }
 
-function elementStyleInvalid(itemElement) {
+function elementStyleInvalid(itemElement, itemError) {
   itemElement.style.border = '1px solid red';
   itemElement.style.boxShadow = 'inset 0px 0px 2px red';
+  itemElement.style.transition = '0.7s';
+  itemError.style.opacity = '1';
 }
 
-function elementStyleValid(itemElement) {
+function elementStyleValid(itemElement, itemError) {
   itemElement.style.border = '1px solid green';
   itemElement.style.boxShadow = 'inset 0px 0px 2px green';
+  itemElement.style.transition = '0.7s';
+  itemError.style.opacity = '0';
 }
 
-function generalValidationForm(itemElement) {
+function generalValidationForm(itemElement, itemError) {
   if (itemElement.type == 'checkbox') return;
-
-  itemElement.value === ''
-    ? elementStyleInvalid(itemElement)
-    : elementStyleValid(itemElement);
-  console.log(itemElement.value);
+  if (itemElement.parentElement == itemError.parentElement) {
+    if (itemElement.value === '') {
+      elementStyleInvalid(itemElement, itemError);
+      return;
+    } else {
+      elementStyleValid(itemElement, itemError);
+      console.log(itemElement.value);
+    }
+  }
 }
