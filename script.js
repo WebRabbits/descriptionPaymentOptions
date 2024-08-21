@@ -37,14 +37,14 @@ divModal.insertAdjacentHTML(
       </section>
       <section class="section-block">
         <div class="form-item">
-          <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="optionsPaysystem" required placeholder="Введите все данные о настройках платёжной системы..."></textarea>
+          <textarea cols="30" rows="10" class="form_type_input" name="optionsPaySystem" required placeholder="Введите все данные о настройках платёжной системы..."></textarea>
           <label>Настройка платёжной системы</label>
           <span class="error_message">Заполните данное поле</span>
         </div>
     </section>
     <section class="section-block">
       <div class="form-item">
-        <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="optionsPayconfig" required placeholder="Введите параметры и значения конфигурационных данных платёжной системы... (Также, можно дать краткое описание каждого параметра)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="optionsPayConfig" required placeholder="Введите параметры и значения конфигурационных данных платёжной системы... (Также, можно дать краткое описание каждого параметра)"></textarea>
         <label>Настройка конфига платёжной системы</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
@@ -80,7 +80,7 @@ divModal.insertAdjacentHTML(
           </div>
           <div>
             <span>&#8226; Выплаты без использования "PayTool" <i>(ДА/НЕТ)</i>:</span>
-            <input type="checkbox" value="" class="form_type_input" name="withdrawalNotPaytool">
+            <input type="checkbox" value="" class="form_type_input" name="withdrawalNotPayTool">
           </div>
         </div>
       </div>
@@ -91,23 +91,23 @@ divModal.insertAdjacentHTML(
       </div>
       <p class="list-toggle">Required-поля:</p>
       <div class="form-item private-options">
-        <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="requiredFieldsDeposit" required placeholder="Перечислите список required-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="requiredFieldsDeposit" required placeholder="Перечислите список required-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>Required-поля при депозите средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
-        <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="requiredFieldsWithdrawal" required  placeholder="Перечислите список required-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="requiredFieldsWithdrawal" required  placeholder="Перечислите список required-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>Required-поля при выводе средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <p class="list-toggle">AdditionalParams-поля:</p>
       <div class="form-item private-options">
-        <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="additionalFieldsDeposit" required  placeholder="Перечислите список additionalParams-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="additionalFieldsDeposit" required  placeholder="Перечислите список additionalParams-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>additionalParams-поля при депозите средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
-        <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="additionalFieldsWithdrawal" required placeholder="Перечислите список additionalParams-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="additionalFieldsWithdrawal" required placeholder="Перечислите список additionalParams-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>additionalParams-поля при выводе средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
@@ -117,12 +117,12 @@ divModal.insertAdjacentHTML(
         <p>Описание работы платёжной системы:</p>
       </div>
       <div class="form-item private-options">
-        <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="descDeposit" required  placeholder="Опишите работу платёжной системы при ДЕПОЗИТЕ средств..."></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="descDeposit" required  placeholder="Опишите работу платёжной системы при ДЕПОЗИТЕ средств..."></textarea>
         <label>Описание работы при ДЕПОЗИТЕ средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
-        <textarea name="" id="" cols="30" rows="10" class="form_type_textarea" name="descWithdrawal" required placeholder="Опишите работу платёжной системы при ВЫВОДЕ средств..."></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="descWithdrawal" required placeholder="Опишите работу платёжной системы при ВЫВОДЕ средств..."></textarea>
         <label>Описание работы при ДЕПОЗИТЕ средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
@@ -146,16 +146,15 @@ const buttonCloseModal = document.querySelector(
 );
 
 const formModal = document.querySelector('.form-modal');
-const inputList = Array.from(formModal.querySelectorAll('.form_type_input'));
-const textareaList = Array.from(
-  formModal.querySelectorAll('.form_type_textarea')
-);
-// console.log(inputList, textareaList);
+console.dir(formModal);
+const inputTextList = Array.from(document.querySelectorAll('.form_type_input'));
+// const textareaList = Array.from(formModal.querySelectorAll('.form_type_input'));
+console.log(inputTextList);
 const errorMessage = Array.from(document.querySelectorAll('.error_message'));
 // console.log(errorMessage);
 const submitButton = document.querySelector('.form_payments_button');
 
-const three = document.querySelector('.container-modal');
+// const three = document.querySelector('.container-modal');
 
 //TODO: Event logic
 
@@ -182,92 +181,80 @@ function closeModal() {
 startValidationForm();
 
 function startValidationForm() {
-  const elementForm = Array.from(formModal.elements);
   formModal.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    //TODO: Общая валидация формы и сбор данных при отправке
-    // console.log(elementForm);
-
-    elementForm.forEach((itemElement) => {
-      // console.log(itemElement);
-      errorMessage.forEach((itemError) => {
-        generalValidationForm(itemElement, itemError);
+    let dataArrayInput = new Array();
+    if (hasValidInput()) {
+      inputTextList.forEach((itemElement) => {
+        console.log(`${itemElement.name}: ${itemElement.value}`);
+        dataArrayInput.push(itemElement.value || itemElement.checked); // Собираем данные в новый массив
+        inputEventElement(itemElement);
+        defaultInput(itemElement);
       });
+      event.target.reset(); // Очищаем форму при заполнении всех полей и отправки данных
+    }
+    console.log(dataArrayInput);
+  });
+
+  inputTextList.forEach((itemElement) => {
+    itemElement.addEventListener('input', () => {
+      inputEventElement(itemElement);
+      showErrorMessage(itemElement);
     });
   });
-  elementForm.forEach((itemElement) => {
-    itemElement.addEventListener('input', () =>
-      errorMessage.forEach((itemError) => {
-        checkElementsValid(itemElement, itemError);
-      })
-    );
-  });
-
-  // elementForm.forEach((itemElement) => {
-  //   itemElement.addEventListener('change', () => {
-  //     errorMessage.forEach((itemError) => {
-  //       checkElementsValid(itemElement, itemError);
-  //     });
-  //   });
-  // });
 }
 
-// function validateForm() {
-//   const elementForm = Array.from(formModal.elements);
-//   elementForm.forEach((itemElement) => {
-//     itemElement.addEventListener('input', checkElementsValid(itemElement));
-//   });
+function hasValidInput() {
+  return inputTextList.every((item) => item.validity.valid);
+}
 
-// elementForm.forEach((itemElement) => {
-//   itemElement.addEventListener('change', () => )
-// })
-// }
+function inputEventElement(item) {
+  if (item.type !== 'text' && item.type !== 'textarea') return;
 
-function checkElementsValid(itemElement, itemError) {
-  // console.log(itemElement);
-  if (itemElement.type == 'checkbox') return;
-  if (itemElement.parentElement == itemError.parentElement) {
-    if (itemElement.value == '') {
-      elementStyleInvalid(itemElement, itemError);
-    } else {
-      elementStyleValid(itemElement, itemError);
-    }
+  if (item.value == '') {
+    console.log(hasValidInput());
+    elementStyleInvalid(item);
+  } else {
+    console.log(hasValidInput());
+    elementStyleValid(item);
   }
 }
 
-// function changeElementsValid(itemElement) {
-//   if (itemElement.value !== '') {
-//     console.log(itemElement.value);
-//     elementStyleValid(itemElement);
-//   } else {
-//     elementStyleInvalid(itemElement);
-//   }
-// }
-
-function elementStyleInvalid(itemElement, itemError) {
+function elementStyleInvalid(itemElement) {
   itemElement.style.border = '1px solid red';
   itemElement.style.boxShadow = 'inset 0px 0px 2px red';
   itemElement.style.transition = '0.7s';
-  itemError.style.opacity = '1';
+  // itemError.style.opacity = '1';
 }
 
-function elementStyleValid(itemElement, itemError) {
+function elementStyleValid(itemElement) {
   itemElement.style.border = '1px solid green';
   itemElement.style.boxShadow = 'inset 0px 0px 2px green';
   itemElement.style.transition = '0.7s';
-  itemError.style.opacity = '0';
+  // itemError.style.opacity = '0';
 }
 
-function generalValidationForm(itemElement, itemError) {
-  if (itemElement.type == 'checkbox') return;
-  if (itemElement.parentElement == itemError.parentElement) {
-    if (itemElement.value === '') {
-      elementStyleInvalid(itemElement, itemError);
-      return;
+function showErrorMessage(itemElement) {
+  errorMessage.find((itemError) => {
+    if (
+      itemElement.value == '' &&
+      itemElement.parentElement == itemError.parentElement
+    ) {
+      itemError.classList.add('error_message_show');
     } else {
-      elementStyleValid(itemElement, itemError);
-      console.log(itemElement.value);
+      itemError.classList.remove('error_message_show');
     }
-  }
+  });
 }
+
+function defaultInput(itemElement) {
+  itemElement.style.border = '1px solid #ccc';
+  itemElement.style.boxShadow = 'none';
+  itemElement.style.transition = '0.7s';
+}
+
+// function toggleButtonSubmit() {
+//   submitButton.disabled = false;
+//   submitButton.style.cursor = 'pointer';
+// }

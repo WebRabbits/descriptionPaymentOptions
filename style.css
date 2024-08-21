@@ -111,6 +111,11 @@
   transition: 0.7s;
 }
 
+.error_message_show {
+  opacity: 1;
+  transition: 0.7s;
+}
+
 .form-item input[type='text'],
 textarea {
   display: block;
