@@ -194,7 +194,9 @@ function startValidationForm() {
       });
       event.target.reset(); // Очищаем форму при заполнении всех полей и отправки данных
     }
-    console.log(dataArrayInput);
+    if (dataArrayInput.length == 0) return;
+    getValidValueElementForm(dataArrayInput);
+    // console.log(dataArrayInput);
   });
 
   inputTextList.forEach((itemElement) => {
@@ -236,10 +238,12 @@ function elementStyleValid(itemElement) {
 }
 
 function showErrorMessage(itemElement) {
-  errorMessage.find((itemError) => {
+  // console.log(itemElement);
+  errorMessage.forEach((itemError) => {
+    // console.log(itemElement, itemError);
     if (
-      itemElement.value == '' &&
-      itemElement.parentElement == itemError.parentElement
+      itemError.parentElement == itemElement.parentElement &&
+      itemElement.value == ''
     ) {
       itemError.classList.add('error_message_show');
     } else {
@@ -252,6 +256,54 @@ function defaultInput(itemElement) {
   itemElement.style.border = '1px solid #ccc';
   itemElement.style.boxShadow = 'none';
   itemElement.style.transition = '0.7s';
+}
+
+function getValidValueElementForm(itemArray) {
+  console.log(itemArray);
+
+  const map = new Map();
+  map.set('namePayment', itemArray[0]);
+  map.set('optionsPaySystem', itemArray[1]);
+  map.set('optionsPayConfig', itemArray[2]);
+  map.set('typePayment', itemArray[3]);
+  map.set('supportCurrencies', itemArray[4]);
+  map.set('supportConversion', itemArray[5]);
+  map.set('withdrawalNotDeposit', itemArray[6]);
+  map.set('withdrawalNotPayTool', itemArray[7]);
+  map.set('requiredFieldsDeposit', itemArray[8]);
+  map.set('requiredFieldsWithdrawal', itemArray[9]);
+  map.set('additionalFieldsDeposit', itemArray[10]);
+  map.set('additionalFieldsWithdrawal', itemArray[11]);
+  map.set('descDeposit', itemArray[12]);
+  map.set('descWithdrawal', itemArray[13]);
+
+  // map.set(namePayment),
+  // optionsPaySystem,
+  // optionsPayConfig,
+  // typePayment,
+  // supportCurrencies,
+  // supportConversion,
+  // withdrawalNotDeposit,
+  // withdrawalNotPayTool,
+  // requiredFieldsDeposit,
+  // requiredFieldsWithdrawal,
+  // additionalFieldsWithdrawal,
+  // descDeposit,
+  // descWithdrawal,
+
+  // console.log(mapObj.descDeposit, mapObj.namePayment);
+  // console.log(descDeposit, namePayment);
+
+  // МОЭНО КОПИРОВАТЬ В БУФЕР ОБМЕНА ЗНАЧЕНИЕ ЦЕЛОЙ ПЕРЕМЕННОЙ СТАНДАРТНЫМ ОБРАЗОМ  через navigator и объекта clipboard с методом .writeText
+  let param = map.get('descWithdrawal');
+  console.log(map.get('descDeposit'), map.get('namePayment'));
+
+  navigator.clipboard
+    .writeText(param)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => console.log(`Error>>> ${err}`));
 }
 
 // function toggleButtonSubmit() {
