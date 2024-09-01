@@ -188,6 +188,10 @@ textarea:focus::-webkit-input-placeholder {
   height: 16px;
 }
 
+.container-text select:focus {
+  outline: none;
+}
+
 .private-options {
   margin-top: 20px;
 }
