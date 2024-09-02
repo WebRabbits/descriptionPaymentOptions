@@ -28,12 +28,12 @@ divModal.insertAdjacentHTML(
         <span class="close-modal">&#10006</span>
       </div>
       <form class="form-modal" novalidate>
-      <section class="section-block">
+      <!--<section class="section-block">
         <div class="form-item">
             <input type="text" class="form_type_input" name="namePayment" required placeholder="Введите название платёжной системы...">
             <label>Название платёжной системы</label>
             <span class="error_message">Заполните данное поле</span>
-        </div>
+        </div>-->
       </section>
       <section class="section-block">
         <div class="form-item">
@@ -114,23 +114,23 @@ divModal.insertAdjacentHTML(
       </div>
       <p class="list-toggle">Required-поля:</p>
       <div class="form-item private-options">
-        <textarea cols="30" rows="10" class="form_type_input" name="requiredFieldsDeposit" required placeholder="Перечислите список required-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="requiredFieldsDeposit" placeholder="Перечислите список required-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>Required-поля при депозите средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
-        <textarea cols="30" rows="10" class="form_type_input" name="requiredFieldsWithdrawal" required  placeholder="Перечислите список required-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="requiredFieldsWithdrawal"  placeholder="Перечислите список required-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>Required-поля при выводе средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <p class="list-toggle">AdditionalParams-поля:</p>
       <div class="form-item private-options">
-        <textarea cols="30" rows="10" class="form_type_input" name="additionalFieldsDeposit" required  placeholder="Перечислите список additionalParams-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="additionalFieldsDeposit"  placeholder="Перечислите список additionalParams-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>additionalParams-поля при депозите средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
-        <textarea cols="30" rows="10" class="form_type_input" name="additionalFieldsWithdrawal" required placeholder="Перечислите список additionalParams-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="additionalFieldsWithdrawal" placeholder="Перечислите список additionalParams-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
         <label>additionalParams-поля при выводе средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
@@ -150,8 +150,28 @@ divModal.insertAdjacentHTML(
         <span class="error_message">Заполните данное поле</span>
       </div>
     </section>
+    <section class="section-block">
+      <div class="form-item link">
+        <div class=container_text>
+          <input type="text" class="form_type_input" name="linkWikiDocumentation" placeholder="Укажите ссылку на Wiki-документацию с ручной отправкой коллбэка">
+          <label>Ссылка на страницу с описанием отправки коллбэка</label>
+        </div>
+      </div>
+      <div class="form-item link">
+        <div class=container_text>
+          <input type="text" class="form_type_input" name="linkIntegrationTask" placeholder="Укажите ссылку на тикет с интеграцией платёжной системы">
+          <label>Ссылка на интеграционный тикет</label>
+        </div>
+      </div>
+      <div class="form-item link">
+        <div class=container_text>
+          <input type="text" class="form_type_input" name="linkExternalDocumentation" placeholder="Укажите ссылку на внешнюю документацию платёжной системы">
+          <label>Ссылка на внешнюю документацию</label>
+        </div>
+      </div>
+    </section>
     <section>
-      <button type="submit" class="form_payments_button">Получить данные</button>
+      <button type="submit" class="form_payments_button">Скопировать описание</button>
     </section>
     </form>
    `
@@ -215,7 +235,7 @@ function startValidationForm() {
           property: itemElement.name,
           value: itemElement.value || itemElement.checked,
         }); // Собираем данные в новый массив
-        // inputEventElement(itemElement);
+        inputEventElement(itemElement);
         defaultInput(itemElement);
       });
       event.target.reset(); // Очищаем форму при заполнении всех полей и отправки данных
@@ -243,11 +263,19 @@ function hasValidInput() {
 }
 
 function inputEventElement(item) {
+  // console.log(item.name);
   // console.log(item.name + '->' + item.value);
   if (
-    item.type !== 'text' &&
-    item.type !== 'textarea' &&
-    item.type !== 'select-one'
+    (item.type !== 'text' &&
+      item.type !== 'textarea' &&
+      item.type !== 'select-one') ||
+    item.name == 'requiredFieldsDeposit' ||
+    item.name == 'requiredFieldsWithdrawal' ||
+    item.name == 'additionalFieldsDeposit' ||
+    item.name == 'additionalFieldsWithdrawal' ||
+    item.name == 'linkWikiDocumentation' ||
+    item.name == 'linkIntegrationTask' ||
+    item.name == 'linkExternalDocumentation'
   )
     return;
 
@@ -316,6 +344,15 @@ function getValidValueElementForm(itemArray) {
         ? (elem.value = 'ОТСУТСТВУЕТ')
         : null;
     }
+
+    if (
+      elem.property == 'requiredFieldsDeposit' ||
+      elem.property == 'requiredFieldsWithdrawal' ||
+      elem.property == 'additionalFieldsDeposit' ||
+      elem.property == 'additionalFieldsWithdrawal'
+    ) {
+      elem.value == undefined ? (elem.value = 'НЕТ') : elem.value;
+    }
     // console.log(elem);
   }
 
@@ -347,7 +384,7 @@ function getValidValueElementForm(itemArray) {
 
   // viewResult(map);
 
-  // МОЭНО КОПИРОВАТЬ В БУФЕР ОБМЕНА ЗНАЧЕНИЕ ЦЕЛОЙ ПЕРЕМЕННОЙ СТАНДАРТНЫМ ОБРАЗОМ  через navigator и объекта clipboard с методом .writeText
+  // МОЖНО КОПИРОВАТЬ В БУФЕР ОБМЕНА ЗНАЧЕНИЕ ЦЕЛОЙ ПЕРЕМЕННОЙ СТАНДАРТНЫМ ОБРАЗОМ  через navigator и объекта clipboard с методом .writeText
   // let param = map.get('descWithdrawal');
   // console.log(map.get('descDeposit'), map.get('namePayment'));
 
@@ -386,17 +423,15 @@ function getIndividualElementMap(processingNewArray) {
 }
 
 const resultDataDescriptionPayment = document.createElement('div');
-document.body.append(resultDataDescriptionPayment);
+// document.body.append(resultDataDescriptionPayment);
 
-// Описать условия для чекбоксов:
-//"Выплаты без наличия успешного депозита"
-//"Выплаты без использования 'PayTool'"
-
-// Подставить <pre><code></code></pre> в части вывода required/additionalParams-полей. Сделать условие проверки вывода информации в данные блоки, если есть информация, и НЕ ВЫВОДИТЬ, если в качестве значение передано "НЕТ"
 function viewResult(objData) {
   resultDataDescriptionPayment.insertAdjacentHTML(
-    'afterend',
-    `<div class="main_block_container_payment">
+    'afterbegin',
+    `
+    <style>*,.main_block_container_payment{margin:0;padding:0}.box_block_payment{display:flex;flex-direction:column;margin:14px 14px 0;padding-bottom:14px;border-bottom:1px solid #ccc}.box_block_payment p{margin:0;font-weight:600;font-size:16px}.block_description_1{display:flex;flex-direction:row;flex-wrap:nowrap;margin-top:10px;padding:10px;width:99%;border:1px solid #ccc;border-radius:5px}.block_description_1 .container_block_icon .icon_block_description,.block_description_2 .container_block_icon .icon_block_description{font-size:10px;font-weight:600;border:1px solid #4a6785;color:#4a6785;border-radius:100px;padding:1px 6px}.block_description_1>div:nth-child(2){margin-left:15px}.options_payment_systems{border-radius:7px}.options_payment_systems>pre{background:#23424c;color:#dfdddd;font-size:15px;padding:10px;border-radius:3px}.options_payment_systems pre code{white-space:pre-line}.block_description_2{border:none;display:flex;flex-direction:column;flex-wrap:nowrap;margin-top:10px;width:99%}.block_description_2 p span{font-weight:600}.box_block_payment:nth-child(5) .block_description_2 p{margin-bottom:5px;display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center}.block_description_2 p input{width:30px;height:18px}.block_description_2 a{font-size:17px;font-weight:600}</style>
+
+    <div class="main_block_container_payment">
     <div class="box_block_payment">
       <p>Настройка платёжной системы</p>
       <div class="block_description_1">
@@ -404,11 +439,7 @@ function viewResult(objData) {
           <span class="icon_block_description">i</span>
         </div>
         <div class="options_payment_systems">
-          <pre>
-             <code>
-             ${objData.optionsPaySystem}
-              </code>
-          </pre>
+          <pre>${objData.optionsPaySystem}</pre>
         </div>
       </div>
     </div>
@@ -419,11 +450,7 @@ function viewResult(objData) {
           <span class="icon_block_description">i</span>
         </div>
         <div class="options_payment_systems">
-          <pre>
-             <code>
-             ${objData.optionsPayConfig}
-              </code>
-          </pre>
+          <pre>${objData.optionsPayConfig}</pre>
         </div>
       </div>
     </div>
@@ -432,7 +459,9 @@ function viewResult(objData) {
       <p>Поддержка видов транзакций</p>
       <div class="block_description_2">
         <p>
-          Платёжная система поддерживает: <span>${objData.typePayment} средств</span>
+          Платёжная система поддерживает: <span>${
+            objData.typePayment
+          } средств</span>
         </p>
       </div>
     </div>
@@ -453,43 +482,119 @@ function viewResult(objData) {
         <p>
           Функционал
           <strong>"Выплаты без наличия успешного депозита"</strong> -
-          <input type="checkbox" value="" checked="${objData.withdrawalNotDeposit}"/>
+          <input type="checkbox" value="" ${
+            objData.withdrawalNotDeposit == true ? 'checked' : false
+          }/>
         </p>
         <p>
           Функционал
           <strong>"Выплаты без использования 'PayTool'"</strong> -
-          <input type="checkbox" value="" checked="${objData.withdrawalNotPayTool}"/>
+          <input type="checkbox" value="" ${
+            objData.withdrawalNotPayTool == true ? 'checked' : false
+          }/>
         </p>
       </div>
     </div>
   
     <div class="box_block_payment">
       <p>Поддерживаемые дополнительные поля</p>
-      <div class="block_description_2">
-        <p>
-          - <strong style="color: orange">Required-поля</strong> при
-          <strong>депозите средств</strong>:
-          <span>${objData.requiredFieldsDeposit}</span>
-        </p>
-        <p>
-          - <strong style="color: orange">Required-поля</strong> при
-          <strong>выводе средств</strong>:
-          <span>${objData.requiredFieldsWithdrawal}</span>
-        </p>
-        <p>
-          - <strong style="color: orange">AdditionalParams-поля</strong> при
-          <strong>депозите средств</strong>:
-          <span>${objData.additionalFieldsDeposit}</span>
-        </p>
-        <p>
-          - <strong style="color: orange">AdditionalParams-поля</strong> при
-          <strong>выводе средств</strong>:
-          <span>${objData.additionalFieldsWithdrawal}</span>
-        </p>
+      ${
+        objData.requiredFieldsDeposit !== 'НЕТ'
+          ? ` 
+    <p>
+        - <strong style="color: orange">Required-поля</strong> при <strong>депозите средств</strong>:
+      <div class="block_description_1">
+        <div class="container_block_icon">
+          <span class="icon_block_description">i</span>
+        </div>
+        <div class="options_payment_systems">
+          <pre>${objData.requiredFieldsDeposit}</pre>
+        </div>
       </div>
+    `
+          : `
+    <div class="block_description_2">
+      <p>
+        - <strong style="color: orange">Required-поля</strong> при
+        <strong>депозите средств</strong>:
+        <span>${objData.requiredFieldsDeposit}</span>
+      </p>
     </div>
-  
-    <div class="box_block_payment">
+    `
+      }
+      ${
+        objData.requiredFieldsWithdrawal !== 'НЕТ'
+          ? ` 
+    <p>
+        - <strong style="color: orange">Required-поля</strong> при <strong>выводе средств</strong>:
+      <div class="block_description_1">
+        <div class="container_block_icon">
+          <span class="icon_block_description">i</span>
+        </div>
+        <div class="options_payment_systems">
+          <pre>${objData.requiredFieldsWithdrawal}</pre>
+        </div>
+      </div>
+    `
+          : `
+    <div class="block_description_2">
+      <p>
+        - <strong style="color: orange">Required-поля</strong> при
+        <strong>выводе средств</strong>:
+        <span>${objData.requiredFieldsWithdrawal}</span>
+      </p>
+    </div>
+    `
+      }
+      ${
+        objData.additionalFieldsDeposit !== 'НЕТ'
+          ? ` 
+    <p>
+        - <strong style="color: orange">AdditionalParams-поля</strong> при <strong>депозите средств</strong>:
+      <div class="block_description_1">
+        <div class="container_block_icon">
+          <span class="icon_block_description">i</span>
+        </div>
+        <div class="options_payment_systems">
+          <pre>${objData.additionalFieldsDeposit}</pre>
+        </div>
+      </div>
+    `
+          : `
+    <div class="block_description_2">
+      <p>
+        - <strong style="color: orange">AdditionalParams-поля</strong> при
+        <strong>депозите средств</strong>:
+        <span>${objData.additionalFieldsDeposit}</span>
+      </p>
+    </div>
+    `
+      }
+      ${
+        objData.additionalFieldsWithdrawal !== 'НЕТ'
+          ? ` 
+    <p>
+        - <strong style="color: orange">AdditionalParams-поля</strong> при <strong>выводе средств</strong>:
+      <div class="block_description_1">
+        <div class="container_block_icon">
+          <span class="icon_block_description">i</span>
+        </div>
+        <div class="options_payment_systems">
+          <pre>${objData.additionalFieldsWithdrawal}</pre>
+        </div>
+      </div>
+    `
+          : `
+    <div class="block_description_2">
+      <p>
+        - <strong style="color: orange">AdditionalParams-поля</strong> при
+        <strong>выводе средств</strong>:
+        <span>${objData.additionalFieldsWithdrawal}</span>
+      </p>
+    </div>
+    `
+      }
+    <div class="box_block_payment" style="margin-left:0px";>
       <p>Описание работы платёжной системы при ДЕПОЗИТЕ средств</p>
       <div class="block_description_1">
         <div class="container_block_icon">
@@ -503,7 +608,7 @@ function viewResult(objData) {
       </div>
     </div>
   
-    <div class="box_block_payment">
+    <div class="box_block_payment" style="margin-left:0px";>
       <p>Описание работы платёжной системы при ВЫВОДЕ средств</p>
       <div class="block_description_1">
         <div class="container_block_icon">
@@ -520,16 +625,28 @@ function viewResult(objData) {
     <div class="box_block_payment">
       <p>Полезные ссылки:</p>
       <div class="block_description_2">
-        <a href="">Ссылка на ручную отправку callback-запроса (Postman)</a>
-        <a href="">Ссылка на интеграционный тикет</a>
-        <a href="">Ссылка на внешнюю документацию платёжной системы</a>
+        <a href="${objData.linkWikiDocumentation}" style="${
+      objData.linkWikiDocumentation !== false ? 'display:block' : 'display:none'
+    }">Ссылка на ручную отправку callback-запроса (Postman)</a>
+        <a href="${objData.linkIntegrationTask}" style="${
+      objData.linkIntegrationTask !== false ? 'display:block' : 'display:none'
+    }">Ссылка на интеграционный тикет</a>
+        <a href="${objData.linkExternalDocumentation}" style="${
+      objData.linkExternalDocumentation !== false
+        ? 'display:block'
+        : 'display:none'
+    }">Ссылка на внешнюю документацию платёжной системы</a>
       </div>
     </div>
   </div>`
   );
+
+  copyResultHTML(resultDataDescriptionPayment);
 }
 
-// function toggleButtonSubmit() {
-//   submitButton.disabled = false;
-//   submitButton.style.cursor = 'pointer';
-// }
+function copyResultHTML(resultHTML) {
+  navigator.clipboard
+    .writeText(resultHTML.innerHTML)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(`Error>>> ${err}`));
+}
