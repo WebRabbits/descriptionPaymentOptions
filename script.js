@@ -192,7 +192,7 @@ const formModal = document.querySelector('.form-modal');
 // console.dir(formModal);
 const inputTextList = Array.from(document.querySelectorAll('.form_type_input'));
 // const textareaList = Array.from(formModal.querySelectorAll('.form_type_input'));
-console.log(inputTextList);
+// console.log(inputTextList);
 const errorMessage = Array.from(document.querySelectorAll('.error_message'));
 // console.log(errorMessage);
 const submitButton = document.querySelector('.form_payments_button');
@@ -230,7 +230,7 @@ function startValidationForm() {
     let dataArrayInput = new Array();
     if (hasValidInput()) {
       inputTextList.forEach((itemElement) => {
-        console.log(`${itemElement.name}: ${itemElement.value}`);
+        // console.log(`${itemElement.name}: ${itemElement.value}`);
         dataArrayInput.push({
           property: itemElement.name,
           value: itemElement.value || itemElement.checked,
@@ -400,15 +400,15 @@ function getIndividualElementMap(processingNewArray) {
   // console.log(processingNewArray);
   // const map = new Map();
   const propertyArray = processingNewArray.map((item) => item.property);
-  console.log(propertyArray);
+  // console.log(propertyArray);
   const valueArray = processingNewArray.map((item) => item.value);
-  console.log(valueArray);
+  // console.log(valueArray);
 
   const newObj = new Object();
 
   propertyArray.forEach((elem, index) => {
     valueArray.find((item, ind) => {
-      console.log(item);
+      // console.log(item);
       if (index === ind) {
         newObj[elem] = typeof item == 'string' ? item.trim() : item;
       }
@@ -417,7 +417,7 @@ function getIndividualElementMap(processingNewArray) {
 
   console.log(newObj);
 
-  console.log(newObj.typePayment, newObj.descDeposit);
+  // console.log(newObj.typePayment, newObj.descDeposit);
 
   viewResult(newObj);
 }
@@ -429,7 +429,7 @@ function viewResult(objData) {
   resultDataDescriptionPayment.insertAdjacentHTML(
     'afterbegin',
     `
-    <style>*,.main_block_container_payment{margin:0;padding:0}.box_block_payment{display:flex;flex-direction:column;margin:14px 14px 0;padding-bottom:14px;border-bottom:1px solid #ccc}.box_block_payment p{margin:0;font-weight:600;font-size:16px}.block_description_1{display:flex;flex-direction:row;flex-wrap:nowrap;margin-top:10px;padding:10px;width:99%;border:1px solid #ccc;border-radius:5px}.block_description_1 .container_block_icon .icon_block_description,.block_description_2 .container_block_icon .icon_block_description{font-size:10px;font-weight:600;border:1px solid #4a6785;color:#4a6785;border-radius:100px;padding:1px 6px}.block_description_1>div:nth-child(2){margin-left:15px}.options_payment_systems{border-radius:7px}.options_payment_systems>pre{background:#23424c;color:#dfdddd;font-size:15px;padding:10px;border-radius:3px}.options_payment_systems pre code{white-space:pre-line}.block_description_2{border:none;display:flex;flex-direction:column;flex-wrap:nowrap;margin-top:10px;width:99%}.block_description_2 p span{font-weight:600}.box_block_payment:nth-child(5) .block_description_2 p{margin-bottom:5px;display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center}.block_description_2 p input{width:30px;height:18px}.block_description_2 a{font-size:17px;font-weight:600}</style>
+    <style>*,.main_block_container_payment{margin:0;padding:0}.box_block_payment{display:flex;flex-direction:column;margin:14px 14px 0;padding-bottom:14px;border-bottom:1px solid #ccc}.box_block_payment p{margin:0;font-weight:600;font-size:16px}.block_description_1{display:flex;flex-direction:row;flex-wrap:nowrap;margin-top:10px;padding:10px;width:99%;border:1px solid #ccc;border-radius:5px}.block_description_1 .container_block_icon .icon_block_description,.block_description_2 .container_block_icon .icon_block_description{font-size:10px;font-weight:600;border:1px solid #4a6785;color:#4a6785;border-radius:100px;padding:1px 6px}.block_description_1>div:nth-child(2){margin-left:15px}.options_payment_systems{border-radius:7px}.options_payment_systems>pre{background:#23424c;color:#dfdddd;font-size:15px;padding:10px;border-radius:3px;white-space:pre-line;}.options_payment_systems span{white-space:pre-line}.options_payment_systems pre code{white-space:pre-line}.block_description_2{border:none;display:flex;flex-direction:column;flex-wrap:nowrap;margin-top:10px;width:99%}.block_description_2 p span{font-weight:600}.box_block_payment:nth-child(5) .block_description_2 p{margin-bottom:5px;display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center}.block_description_2 p input{width:30px;height:18px}.block_description_2 a{font-size:17px;font-weight:600}</style>
 
     <div class="main_block_container_payment">
     <div class="box_block_payment">
@@ -478,7 +478,9 @@ function viewResult(objData) {
     <div class="box_block_payment">
       <p>Поддержка дополнительного функционала</p>
       <div class="block_description_2">
-        <p>Функционал конвертации: <span>${objData.supportConversion}</span></p>
+        <p>Функционал конвертации: <span> ${
+          objData.supportConversion
+        }</span></p>
         <p>
           Функционал
           <strong>"Выплаты без наличия успешного депозита"</strong> -
@@ -594,6 +596,7 @@ function viewResult(objData) {
     </div>
     `
       }
+    </div>
     <div class="box_block_payment" style="margin-left:0px";>
       <p>Описание работы платёжной системы при ДЕПОЗИТЕ средств</p>
       <div class="block_description_1">

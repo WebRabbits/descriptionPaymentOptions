@@ -1,16 +1,19 @@
+.block-button-modal {
+  font-family: 'Roboto';
+}
+
 .container-modal {
   width: auto;
   height: 650px;
   border: 1px solid rgb(51, 51, 51);
   border-radius: 5px;
-  margin: 10px;
+  margin: 130px 260px 130px 260px;
   padding: 10px;
   position: relative;
   z-index: 1000000;
   overflow: overlay;
   opacity: 0;
   visibility: hidden;
-  /* display: none; */
   transition: 0.5s linear;
   transition: opacity 0.3s linear, visibility 0.3s linear;
 }
@@ -18,19 +21,7 @@
 .openModal {
   opacity: 1;
   visibility: visible;
-  /* display: block;
-   animation: showBlock 0.5s linear forwards;
-   transition: 0.5s; */
 }
-
-/* @keyframes showBlock {
-   0% {
-     opacity: 0;
-   }
-   100% {
-     opacity: 1;
-   }
- } */
 
 .close-modal {
   cursor: pointer;
@@ -39,8 +30,33 @@
   transition: 0.5s;
 }
 
-.add_button_description_payment {
+.form-modal {
+  background: url('images/promo_bg.png');
+}
+
+.add_button_description_payment,
+.form_payments_button {
   cursor: pointer;
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+  background: #588af2;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 14px;
+  transition: 0.5s;
+}
+
+.add_button_description_payment,
+.form_payments_button:hover {
+  transition: 0.5s;
+  box-shadow: 0 0 0 4px #cbd6ee;
+}
+
+.add_button_description_payment,
+.form_payments_button:active {
+  transition: 0.5s;
+  box-shadow: inset 0px 0px 3px 0px #0c0707;
 }
 
 .neon_border {
@@ -144,6 +160,7 @@ textarea {
 .form-item textarea {
   resize: vertical;
   min-height: 100px;
+  white-space: pre-line;
 }
 
 .form-item input[type='text']:focus,
