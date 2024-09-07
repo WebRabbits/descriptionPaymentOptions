@@ -2,10 +2,17 @@
   font-family: 'Roboto';
 }
 
+.box-modal-main {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1000000;
+}
+
 .container-modal {
   width: auto;
   height: 650px;
-  border: 1px solid rgb(51, 51, 51);
+  box-shadow: 0 0px 15px 1px rgb(51, 51, 51);
   border-radius: 5px;
   margin: 130px 260px 130px 260px;
   padding: 10px;
@@ -14,8 +21,25 @@
   overflow: overlay;
   opacity: 0;
   visibility: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #232b55bf;
   transition: 0.5s linear;
+  /* background: linear-gradient(135deg, #e2e6ff 66%, #ebeeff 133%); */
+  background: linear-gradient(#232b55bf, rgba(35, 43, 85, 0.95));
   transition: opacity 0.3s linear, visibility 0.3s linear;
+}
+
+.container-modal::-webkit-scrollbar {
+  width: 15px;
+}
+
+.container-modal::-webkit-scrollbar-track {
+  background: linear-gradient(#232b55bf, rgba(35, 43, 85, 0.95));
+}
+
+.container-modal::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  border: 10px solid #ccc;
 }
 
 .openModal {
@@ -30,31 +54,24 @@
   transition: 0.5s;
 }
 
-.form-modal {
-  background: url('images/promo_bg.png');
-}
-
-.add_button_description_payment,
-.form_payments_button {
+.block-button-modal button {
   cursor: pointer;
   appearance: none;
   border: 0;
   border-radius: 5px;
   background: #588af2;
   color: #fff;
-  padding: 8px 16px;
+  padding: 16px 128px;
   font-size: 14px;
   transition: 0.5s;
 }
 
-.add_button_description_payment,
-.form_payments_button:hover {
+.block-button-modal button:hover {
   transition: 0.5s;
   box-shadow: 0 0 0 4px #cbd6ee;
 }
 
-.add_button_description_payment,
-.form_payments_button:active {
+.block-button-modal button:active {
   transition: 0.5s;
   box-shadow: inset 0px 0px 3px 0px #0c0707;
 }
@@ -79,6 +96,33 @@
   margin-bottom: 7px;
 }
 
+.section-block p,
+label,
+span {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.container_text select {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.container-text select option[selected] {
+  font-size: 16px;
+}
+
+.container-text select:visited {
+  border: 0;
+}
+
+.container-text select:focus {
+  border: 0;
+}
+
+.container-text select:active {
+  border: 0;
+}
+
 .container-close-modal {
   align-content: center;
   position: absolute;
@@ -87,7 +131,7 @@
 }
 
 .container-close-modal :hover {
-  color: #3b3b3b;
+  color: #ffffffb3;
   transition: 0.5s;
 }
 
@@ -145,6 +189,7 @@ textarea {
   width: 98%;
   padding: 5px;
   margin: auto;
+  color: rgba(255, 255, 255, 0.7);
   border: 1px solid #ccc;
   font-size: 15px;
   border-bottom: none;
@@ -152,7 +197,7 @@ textarea {
   background-size: 0 100%, 100% 100%;
   background-image: linear-gradient(0deg, #2d9ecd 2px, rgba(156, 39, 176, 0) 0),
     linear-gradient(0deg, #ccc 1px, hsla(0, 0%, 82%, 0) 0);
-  border-radius: 3px;
+  border-radius: 5px;
   position: relative;
   z-index: 100;
 }
@@ -176,16 +221,19 @@ textarea:focus {
 input[type='text']:not(:placeholder-shown) + label,
 textarea:focus + label,
 textarea:not(:placeholder-shown) + label {
+  color: #ccc;
   top: -20px;
   opacity: 1;
 }
 
 ::-webkit-input-placeholder {
+  color: #fff;
   opacity: 0;
 }
 
 .form-item input[type='text']:focus::-webkit-input-placeholder,
 textarea:focus::-webkit-input-placeholder {
+  color: #ccc;
   opacity: 1;
 }
 
@@ -208,8 +256,8 @@ textarea:focus::-webkit-input-placeholder {
 .container-text > div > input[type='checkbox'] {
   margin: 0;
   text-align: center;
-  width: 20px;
-  height: 16px;
+  width: 50px;
+  height: 24px;
 }
 
 .container-text select:focus {
@@ -235,4 +283,45 @@ section:last-child {
   font-size: 22px;
   border-radius: 3px;
   cursor: pointer;
+}
+
+.check {
+  position: absolute;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  z-index: 100;
+}
+
+.checkbox_label {
+  position: relative !important;
+  display: inline-block;
+  width: 50px;
+  height: 20px;
+  border-radius: 20px;
+  background: red;
+  cursor: pointer;
+  top: 0px !important;
+  left: 0px !important;
+}
+.checkbox_label::before {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: block;
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: 0.3s;
+}
+
+.check:checked + .checkbox_label {
+  background-color: green;
+  content: 'Да';
+}
+
+.check:checked + .checkbox_label::before {
+  left: calc(100% - 20px);
 }

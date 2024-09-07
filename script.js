@@ -17,6 +17,8 @@ const addButtonDescPayment = document.createElement('button');
 addButtonDescPayment.className = 'add_button_description_payment';
 addButtonDescPayment.innerText = 'Добавить описание платёжной системы';
 
+const boxModalMain = document.createElement('div');
+boxModalMain.className = 'box-modal-main';
 const divModal = document.createElement('div');
 divModal.className = 'container-modal';
 // divModal.textContent = 'This test text message the modal'; // TODO: потом убрать
@@ -99,11 +101,13 @@ divModal.insertAdjacentHTML(
           <p>Поддержка функционала платёжной системы:</p>
           <div>
             <span>&#8226; Выплаты без наличия депозита <i>(ДА/НЕТ)</i>:</span>
-            <input type="checkbox" value="" class="form_type_input" name="withdrawalNotDeposit">
+            <input type="checkbox" value="" class="form_type_input check" name="withdrawalNotDeposit">
+            <label for="checkbox" class="checkbox_label"></label>
           </div>
           <div>
             <span>&#8226; Выплаты без использования "PayTool" <i>(ДА/НЕТ)</i>:</span>
-            <input type="checkbox" value="" class="form_type_input" name="withdrawalNotPayTool">
+            <input type="checkbox" value="" class="form_type_input check" name="withdrawalNotPayTool">
+            <label for="checkbox" class="checkbox_label"></label>
           </div>
         </div>
       </div>
@@ -114,23 +118,23 @@ divModal.insertAdjacentHTML(
       </div>
       <p class="list-toggle">Required-поля:</p>
       <div class="form-item private-options">
-        <textarea cols="30" rows="10" class="form_type_input" name="requiredFieldsDeposit" placeholder="Перечислите список required-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="requiredFieldsDeposit" placeholder="Перечислите список required-полей для депозита средств (либо, оставьте поле пустым, если данные отсутствуют)"></textarea>
         <label>Required-поля при депозите средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
-        <textarea cols="30" rows="10" class="form_type_input" name="requiredFieldsWithdrawal"  placeholder="Перечислите список required-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="requiredFieldsWithdrawal"  placeholder="Перечислите список required-полей для вывода средств (либо, оставьте поле пустым, если данные отсутствуют)"></textarea>
         <label>Required-поля при выводе средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <p class="list-toggle">AdditionalParams-поля:</p>
       <div class="form-item private-options">
-        <textarea cols="30" rows="10" class="form_type_input" name="additionalFieldsDeposit"  placeholder="Перечислите список additionalParams-полей для депозита средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="additionalFieldsDeposit"  placeholder="Перечислите список additionalParams-полей для депозита средств (либо, оставьте поле пустым, если данные отсутствуют)"></textarea>
         <label>additionalParams-поля при депозите средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
-        <textarea cols="30" rows="10" class="form_type_input" name="additionalFieldsWithdrawal" placeholder="Перечислите список additionalParams-полей для вывода средств (либо укажите 'НЕТ' при их отсутствие)"></textarea>
+        <textarea cols="30" rows="10" class="form_type_input" name="additionalFieldsWithdrawal" placeholder="Перечислите список additionalParams-полей для вывода средств (либо, оставьте поле пустым, если данные отсутствуют)"></textarea>
         <label>additionalParams-поля при выводе средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
@@ -180,7 +184,8 @@ divModal.insertAdjacentHTML(
 document.body.prepend(divBlockButtonModal);
 divBlockButtonModal.append(divButton);
 divButton.append(addButtonDescPayment);
-divBlockButtonModal.append(divModal);
+divBlockButtonModal.append(boxModalMain);
+boxModalMain.append(divModal);
 
 //TODO: Get elements
 
@@ -210,13 +215,15 @@ buttonCloseModal.addEventListener('click', closeModal);
 //TODO: Открытие модального окна
 function openModal() {
   divModal.classList.add('openModal');
+  boxModalMain.style.backdropFilter = 'blur(5px)';
 }
 
 //TODO: Закрытие модального окна при нажатии на кнопку закрытия
 function closeModal() {
-  divModal.classList.contains('openModal')
-    ? divModal.classList.remove('openModal')
-    : null;
+  if (divModal.classList.contains('openModal')) {
+    divModal.classList.remove('openModal');
+    boxModalMain.style.backdropFilter = 'blur(0)';
+  }
 }
 
 //https://doka.guide/recipes/validation/
@@ -312,8 +319,8 @@ function elementStyleInvalid(itemElement) {
 }
 
 function elementStyleValid(itemElement) {
-  itemElement.style.border = '1px solid green';
-  itemElement.style.boxShadow = 'inset 0px 0px 2px green';
+  itemElement.style.border = '1px solid #20f620';
+  itemElement.style.boxShadow = 'inset 0px 0px 2px #20f620';
   itemElement.style.transition = '0.7s';
   // itemError.style.opacity = '0';
 }
@@ -478,9 +485,7 @@ function viewResult(objData) {
     <div class="box_block_payment">
       <p>Поддержка дополнительного функционала</p>
       <div class="block_description_2">
-        <p>Функционал конвертации: <span> ${
-          objData.supportConversion
-        }</span></p>
+        <p>Функционал конвертации: <span>${objData.supportConversion}</span></p>
         <p>
           Функционал
           <strong>"Выплаты без наличия успешного депозита"</strong> -
@@ -650,6 +655,6 @@ function viewResult(objData) {
 function copyResultHTML(resultHTML) {
   navigator.clipboard
     .writeText(resultHTML.innerHTML)
-    .then((res) => console.log(res))
+    .then((res) => closeModal())
     .catch((err) => console.log(`Error>>> ${err}`));
 }
