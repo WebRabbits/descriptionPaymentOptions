@@ -3,7 +3,7 @@
 }
 
 .box-modal-main {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   z-index: 1000000;
@@ -22,7 +22,7 @@
   z-index: 1000000;
   overflow: overlay;
   /* opacity: 0;
-  visibility: hidden; */
+   visibility: hidden; */
   scrollbar-width: thin;
   scrollbar-color: #232b55bf;
   transition: 0.5s linear;
@@ -57,7 +57,12 @@
 }
 
 .add_button_description_payment {
-  padding: 8px 16px !important;
+  position: fixed;
+  z-index: 1000000;
+  padding: 8px 28px !important;
+  margin: 4px;
+  width: auto !important;
+  height: auto !important;
 }
 
 .block-button-modal button {
@@ -67,7 +72,9 @@
   border-radius: 5px;
   background: #588af2;
   color: #fff;
-  padding: 16px 128px;
+  /* padding: 16px 128px; */
+  width: 404px;
+  height: 32px;
   font-size: 14px;
   transition: 0.5s;
 }
@@ -75,6 +82,7 @@
 .block-button-modal button:hover {
   transition: 0.5s;
   box-shadow: 0 0 0 4px #cbd6ee;
+  background: #588af2;
 }
 
 .block-button-modal button:active {
@@ -103,8 +111,8 @@
 }
 
 .section-block p,
-label,
-span {
+.section-block label,
+.section-block span {
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -296,6 +304,7 @@ section:last-child {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  opacity: 0;
   z-index: 100;
 }
 
@@ -325,7 +334,6 @@ section:last-child {
 
 .check:checked + .checkbox_label {
   background-color: #20f620;
-  content: 'Да';
 }
 
 .check:checked + .checkbox_label::before {
@@ -336,7 +344,7 @@ section:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
@@ -368,4 +376,5 @@ section:last-child {
 
 .block_main_mess .div_message span:nth-child(2) {
   margin-top: 10px;
+  font-size: 16px;
 }
