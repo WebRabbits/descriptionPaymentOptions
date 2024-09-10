@@ -144,7 +144,7 @@ divModal.insertAdjacentHTML(
       </div>
       <div class="form-item private-options">
         <textarea cols="30" rows="10" class="form_type_input" name="descWithdrawal" required placeholder="Опишите работу платёжной системы при ВЫВОДЕ средств..."></textarea>
-        <label>Описание работы при ДЕПОЗИТЕ средств</label>
+        <label>Описание работы при ВЫВОДЕ средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
     </section>
