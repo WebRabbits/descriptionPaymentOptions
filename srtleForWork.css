@@ -4,6 +4,8 @@
 
 .box-modal-main {
   position: fixed;
+  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
   z-index: 1000000;
@@ -110,8 +112,14 @@
   margin-bottom: 7px;
 }
 
-.section-block p,
-.section-block label,
+.section-block p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.section-block label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .section-block span {
   color: rgba(255, 255, 255, 0.7);
 }
@@ -176,18 +184,31 @@
   transition: top 0.5s;
   z-index: 1;
 }
+
 .link {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+}
+
+.link:nth-child(2) {
+  margin-bottom: 8px;
 }
 
 .link:nth-child(3) {
   margin-bottom: 0px;
 }
 
+.descDeposit:read-only {
+  cursor: not-allowed;
+}
+
+.descWithdrawal:read-only {
+  cursor: not-allowed;
+}
+
 .error_message {
   text-align: center;
   font-size: 14px;
-  color: darkorange;
+  color: darkorange !important;
   opacity: 0;
   transition: 0.7s;
 }
@@ -197,8 +218,25 @@
   transition: 0.7s;
 }
 
-.form-item input[type='text'],
-textarea {
+.form-item input[type='text'] {
+  display: block;
+  width: 98%;
+  padding: 5px;
+  margin: auto;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid #ccc;
+  font-size: 15px;
+  border-bottom: none;
+  background: no-repeat bottom, 50% calc(100% - 1px);
+  background-size: 0 100%, 100% 100%;
+  background-image: linear-gradient(0deg, #2d9ecd 2px, rgba(156, 39, 176, 0) 0),
+    linear-gradient(0deg, #ccc 1px, hsla(0, 0%, 82%, 0) 0);
+  border-radius: 5px;
+  position: relative;
+  z-index: 100;
+}
+
+.form-item textarea {
   display: block;
   width: 98%;
   padding: 5px;
@@ -377,4 +415,9 @@ section:last-child {
 .block_main_mess .div_message span:nth-child(2) {
   margin-top: 10px;
   font-size: 16px;
+}
+
+.not_supported_option {
+  border: 1px solid #db1c1f;
+  background: #e312121a;
 }

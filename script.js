@@ -61,7 +61,7 @@ divModal.insertAdjacentHTML(
         <div class=container_text>
           <div>
             <span>&#8226; Поддержка видов транзакций:</span>
-            <select class="form_type_input" name="typePayment" required>
+            <select class="form_type_input typePayment" name="typePayment" required>
               <option value="" disabled selected>Выберите значение...</option>
               <option value="all">Депозит/Вывод</option>
               <option value="deposit">Депозит</option>
@@ -138,34 +138,29 @@ divModal.insertAdjacentHTML(
         <p>Описание работы платёжной системы:</p>
       </div>
       <div class="form-item private-options">
-        <textarea cols="30" rows="10" class="form_type_input" name="descDeposit" required  placeholder="Опишите работу платёжной системы при ДЕПОЗИТЕ средств..."></textarea>
+        <textarea cols="30" rows="10" class="form_type_input descDeposit" name="descDeposit" required  placeholder="Опишите работу платёжной системы при ДЕПОЗИТЕ средств..."></textarea>
         <label>Описание работы при ДЕПОЗИТЕ средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item private-options">
-        <textarea cols="30" rows="10" class="form_type_input" name="descWithdrawal" required placeholder="Опишите работу платёжной системы при ВЫВОДЕ средств..."></textarea>
-        <label>Описание работы при ДЕПОЗИТЕ средств</label>
+        <textarea cols="30" rows="10" class="form_type_input descWithdrawal" name="descWithdrawal" required placeholder="Опишите работу платёжной системы при ВЫВОДЕ средств..."></textarea>
+        <label>Описание работы при ВЫВОДЕ средств</label>
         <span class="error_message">Заполните данное поле</span>
       </div>
     </section>
     <section class="section-block">
       <div class="form-item link">
-        <div class=container_text>
-          <input type="text" class="form_type_input" name="linkWikiDocumentation" placeholder="Укажите ссылку на Wiki-документацию с ручной отправкой коллбэка">
-          <label>Ссылка на страницу с описанием отправки коллбэка</label>
-        </div>
+        <input type="text" class="form_type_input" name="linkWikiDocumentation" placeholder="Укажите ссылку на Wiki-документацию с ручной отправкой коллбэка">
+        <label>Ссылка на страницу с описанием отправки коллбэка</label>
       </div>
       <div class="form-item link">
-        <div class=container_text>
-          <input type="text" class="form_type_input" name="linkIntegrationTask" placeholder="Укажите ссылку на тикет с интеграцией платёжной системы">
-          <label>Ссылка на интеграционный тикет</label>
-        </div>
+        <input type="text" class="form_type_input" name="linkIntegrationTask" required placeholder="Укажите ссылку на тикет с интеграцией платёжной системы">
+        <label>Ссылка на интеграционный тикет</label>
+        <span class="error_message">Заполните данное поле</span>
       </div>
       <div class="form-item link">
-        <div class=container_text>
-          <input type="text" class="form_type_input" name="linkExternalDocumentation" placeholder="Укажите ссылку на внешнюю документацию платёжной системы">
-          <label>Ссылка на внешнюю документацию</label>
-        </div>
+        <input type="text" class="form_type_input" name="linkExternalDocumentation" placeholder="Укажите ссылку на внешнюю документацию платёжной системы">
+        <label>Ссылка на внешнюю документацию</label>
       </div>
     </section>
     <section>
@@ -190,6 +185,8 @@ const buttonCloseModal = document.querySelector(
 const formModal = document.querySelector('.form-modal');
 const inputTextList = Array.from(document.querySelectorAll('.form_type_input'));
 const errorMessage = Array.from(document.querySelectorAll('.error_message'));
+const elemTextDescDeposit = document.querySelector('.descDeposit');
+const elemTextDescWithdrawal = document.querySelector('.descWithdrawal');
 const submitButton = document.querySelector('.form_payments_button');
 
 //TODO: Event logic
@@ -230,12 +227,14 @@ function startValidationForm() {
         inputEventElement(itemElement);
         defaultInput(itemElement);
       });
-      event.target.reset(); // Очищаем форму при заполнении всех полей и отправки данных
+      // event.target.reset(); // Очищаем форму при заполнении всех полей и отправки данных
     } else {
       inputTextList.forEach((itemElement) => inputEventElement(itemElement));
     }
     if (dataArrayInput.length == 0) return;
     getValidValueElementForm(dataArrayInput);
+
+    event.target.reset(); // Очищаем форму при заполнении всех полей и отправки данных
   });
 
   inputTextList.forEach((itemElement) => {
@@ -250,17 +249,34 @@ function hasValidInput() {
 }
 
 function inputEventElement(item) {
+  if (item.name == 'typePayment' && item.value == 'all') {
+    elemTextDescDeposit.required = true;
+    elemTextDescWithdrawal.required = true;
+    elemTextDescDeposit.readOnly = false;
+    elemTextDescWithdrawal.readOnly = false;
+  } else if (item.name == 'typePayment' && item.value == 'deposit') {
+    elemTextDescWithdrawal.required = false;
+    elemTextDescWithdrawal.readOnly = true;
+    elemTextDescWithdrawal.value = '';
+    defaultInput(elemTextDescWithdrawal);
+    showErrorMessage(elemTextDescWithdrawal);
+    elemTextDescDeposit.required = true;
+    elemTextDescDeposit.readOnly = false;
+  } else if (item.name == 'typePayment' && item.value == 'withdraw') {
+    elemTextDescDeposit.required = false;
+    elemTextDescDeposit.readOnly = true;
+    elemTextDescDeposit.value = '';
+    defaultInput(elemTextDescDeposit);
+    showErrorMessage(elemTextDescDeposit);
+    elemTextDescWithdrawal.required = true;
+    elemTextDescWithdrawal.readOnly = false;
+  }
+
   if (
     (item.type !== 'text' &&
       item.type !== 'textarea' &&
       item.type !== 'select-one') ||
-    item.name == 'requiredFieldsDeposit' ||
-    item.name == 'requiredFieldsWithdrawal' ||
-    item.name == 'additionalFieldsDeposit' ||
-    item.name == 'additionalFieldsWithdrawal' ||
-    item.name == 'linkWikiDocumentation' ||
-    item.name == 'linkIntegrationTask' ||
-    item.name == 'linkExternalDocumentation'
+    item.required == false
   )
     return;
 
@@ -276,7 +292,7 @@ function inputEventElement(item) {
 function showErrorMessage(itemElement) {
   errorMessage.forEach((itemError) => {
     if (itemElement.parentElement == itemError.parentElement) {
-      if (itemElement.value == '') {
+      if (itemElement.value == '' && itemElement.required == true) {
         itemError.classList.add('error_message_show');
       } else {
         itemError.classList.remove('error_message_show');
@@ -327,7 +343,9 @@ function getValidValueElementForm(itemArray) {
       elem.property == 'requiredFieldsDeposit' ||
       elem.property == 'requiredFieldsWithdrawal' ||
       elem.property == 'additionalFieldsDeposit' ||
-      elem.property == 'additionalFieldsWithdrawal'
+      elem.property == 'additionalFieldsWithdrawal' ||
+      elem.property == 'descDeposit' ||
+      elem.property == 'descWithdrawal'
     ) {
       elem.value == undefined ? (elem.value = 'НЕТ') : elem.value;
     }
@@ -363,7 +381,7 @@ function viewResult(objData) {
   resultDataDescriptionPayment.insertAdjacentHTML(
     'afterbegin',
     `
-    <style>*,.main_block_container_payment{margin:0;padding:0}.box_block_payment{display:flex;flex-direction:column;margin:14px 14px 0;padding-bottom:14px;border-bottom:1px solid #ccc}.box_block_payment p{margin:0;font-weight:600;font-size:16px}.block_description_1{display:flex;flex-direction:row;flex-wrap:nowrap;margin-top:10px;padding:10px;width:99%;border:1px solid #ccc;border-radius:5px}.block_description_1 .container_block_icon .icon_block_description,.block_description_2 .container_block_icon .icon_block_description{font-size:10px;font-weight:600;border:1px solid #4a6785;color:#4a6785;border-radius:100px;padding:1px 6px}.block_description_1>div:nth-child(2){margin-left:15px}.options_payment_systems{border-radius:7px}.options_payment_systems>pre{background:#23424c;color:#dfdddd;font-size:15px;padding:10px;border-radius:3px;white-space:pre-line;}.options_payment_systems span{white-space:pre-line}.options_payment_systems pre code{white-space:pre-line}.block_description_2{border:none;display:flex;flex-direction:column;flex-wrap:nowrap;margin-top:10px;width:99%}.block_description_2 p span{font-weight:600}.box_block_payment:nth-child(5) .block_description_2 p{margin-bottom:5px;display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center}.block_description_2 p input{width:30px;height:18px}.block_description_2 a{font-size:17px;font-weight:600}</style>
+    <style>*,.main_block_container_payment{margin:0;padding:0}.box_block_payment{display:flex;flex-direction:column;margin:14px 14px 0;padding-bottom:14px;border-bottom:1px solid #ccc}.box_block_payment p{margin:0;font-weight:600;font-size:16px}.block_description_1{display:flex;flex-direction:row;flex-wrap:nowrap;margin-top:10px;padding:10px;width:99%;border:1px solid #ccc;border-radius:5px}.block_description_1 .container_block_icon .icon_block_description,.block_description_2 .container_block_icon .icon_block_description{font-size:10px;font-weight:600;border:1px solid #4a6785;color:#4a6785;border-radius:100px;padding:1px 6px}.block_description_1>div:nth-child(2){margin-left:15px}.options_payment_systems{border-radius:7px}.options_payment_systems>pre{background:#23424c;color:#dfdddd;font-size:15px;padding:10px;border-radius:3px;white-space:pre-line;}.options_payment_systems span{white-space:pre-line}.options_payment_systems pre code{white-space:pre-line}.block_description_2{border:none;display:flex;flex-direction:column;flex-wrap:nowrap;margin-top:10px;width:99%}.block_description_2 p span{font-weight:600}.box_block_payment:nth-child(5) .block_description_2 p{margin-bottom:5px;display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center}.block_description_2 p input{width:30px;height:18px}.block_description_2 a{font-size:17px;font-weight:600}.not_supported_option{border:1px solid #db1c1f;background:#e312121a;}</style>
 
     <div class="main_block_container_payment">
     <div class="box_block_payment">
@@ -531,6 +549,21 @@ function viewResult(objData) {
     </div>
     <div class="box_block_payment" style="margin-left:0px";>
       <p>Описание работы платёжной системы при ДЕПОЗИТЕ средств</p>
+      ${
+        objData.descDeposit == 'НЕТ'
+          ? `
+      <div class="block_description_1 not_supported_option">
+        <div class="container_block_icon">
+          <span class="icon_block_description">i</span>
+        </div>
+        <div class="options_payment_systems">
+          <span>
+            Платёжная система НЕ ПОДДЕРЖИВАЕТ данный функционал
+          </span>
+        </div>
+      </div>
+      `
+          : `
       <div class="block_description_1">
         <div class="container_block_icon">
           <span class="icon_block_description">i</span>
@@ -541,10 +574,27 @@ function viewResult(objData) {
           </span>
         </div>
       </div>
+      `
+      }
     </div>
   
     <div class="box_block_payment" style="margin-left:0px";>
       <p>Описание работы платёжной системы при ВЫВОДЕ средств</p>
+      ${
+        objData.descWithdrawal == 'НЕТ'
+          ? `
+      <div class="block_description_1 not_supported_option">
+        <div class="container_block_icon">
+          <span class="icon_block_description">i</span>
+        </div>
+        <div class="options_payment_systems">
+          <span>
+            Платёжная система НЕ ПОДДЕРЖИВАЕТ данный функционал
+          </span>
+        </div>
+      </div>
+      `
+          : `
       <div class="block_description_1">
         <div class="container_block_icon">
           <span class="icon_block_description">i</span>
@@ -555,6 +605,8 @@ function viewResult(objData) {
           </span>
         </div>
       </div>
+      `
+      }
     </div>
   
     <div class="box_block_payment">
