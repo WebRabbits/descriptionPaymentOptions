@@ -1,7 +1,3 @@
-'use strict';
-
-'use strict';
-
 //TODO: Add elements page
 
 const divBlockButtonModal = document.createElement('div');
